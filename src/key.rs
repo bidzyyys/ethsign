@@ -132,6 +132,11 @@ impl SecretKey {
         PublicKey::from_slice(&uncompressed[1..]).expect("The length of the key is correct; qed")
     }
 
+    /// Private key
+    pub fn private(&self) -> &[u8] {
+        self.secret.as_ref()
+    }
+
     /// Sign given 32-byte message with the key.
     pub fn sign(&self, message: &[u8]) -> Result<Signature, ec::Error> {
         let (v, data) = ec::sign(self.secret.as_ref(), message)?;
